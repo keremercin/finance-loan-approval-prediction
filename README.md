@@ -26,4 +26,3 @@ After training and evaluating the models, the following accuracy rates were achi
 - `data/train.csv`: The training dataset.
 - `data/test.csv`: The test dataset.
 - `scripts/loan_approval_prediction.py`: The Python code for data preprocessing, model training, and evaluation.
-- `notebooks/loan_approval_notebook.ipynb`: A Jupyter Notebook version of the project (optional).
