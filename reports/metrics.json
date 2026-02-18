@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "project": "finance-loan-approval-prediction",
+  "model_version": "0.5.0",
+  "metrics": {
+    "logistic_regression": {"accuracy": 0.8618, "f1": 0.9081, "roc_auc": 0.8523},
+    "random_forest": {"accuracy": 0.8211, "f1": 0.8764, "roc_auc": 0.7913},
+    "gradient_boosting": {"accuracy": 0.8049, "f1": 0.8667, "roc_auc": 0.7551}
+  },
+  "best_model": "logistic_regression"
+}

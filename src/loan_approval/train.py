@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import joblib
@@ -10,6 +11,9 @@ from sklearn.pipeline import Pipeline
 
 from loan_approval.data import load_train_data, split_xy
 from loan_approval.preprocess import make_preprocessor
+
+
+APP_VERSION = "0.5.0"
 
 
 def _models(random_state: int = 42):
@@ -68,6 +72,16 @@ def train_and_evaluate(
     Path("models").mkdir(parents=True, exist_ok=True)
     metrics_df.to_csv(metrics_out, index=False)
 
+    metrics_json = {
+        "schema_version": "1.0",
+        "project": "finance-loan-approval-prediction",
+        "model_version": APP_VERSION,
+        "best_model": best_name,
+        "best_f1": round(best_score, 4),
+        "metrics": metrics_df.to_dict(orient="records"),
+    }
+    Path("reports/metrics.json").write_text(json.dumps(metrics_json, indent=2), encoding="utf-8")
+
     joblib.dump(best_pipeline, model_out)
 
     return {
@@ -76,6 +90,7 @@ def train_and_evaluate(
         "metrics": metrics_df.to_dict(orient="records"),
         "model_path": model_out,
         "metrics_path": metrics_out,
+        "metrics_json_path": "reports/metrics.json",
     }
 
 

@@ -9,4 +9,7 @@ models/*.joblib
 reports/*.json
 reports/*.csv
 reports/*.md
+!reports/metrics.json
+!reports/benchmark.md
+!reports/model_card.md
 .DS_Store

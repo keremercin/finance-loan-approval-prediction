@@ -8,6 +8,14 @@ def test_health() -> None:
     client = TestClient(app)
     r = client.get("/health")
     assert r.status_code == 200
+    assert r.json()["status"] == "ok"
+
+
+def test_version() -> None:
+    client = TestClient(app)
+    r = client.get("/version")
+    assert r.status_code == 200
+    assert r.json()["data"]["version"] == "0.5.0"
 
 
 def test_predict_endpoint() -> None:
@@ -29,6 +37,6 @@ def test_predict_endpoint() -> None:
     }
     r = client.post("/v1/predict", json=payload)
     assert r.status_code == 200
-    body = r.json()
+    body = r.json()["data"]
     assert "loan_approved" in body
     assert "approval_probability" in body
