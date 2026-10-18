@@ -1,20 +1,18 @@
-# Case Study — Loan Approval Prediction
+# Validation Demo — Loan Approval Prediction
 
 ## Context
-Financial teams need fast, consistent decision support for loan approvals.
+This repository is a code demonstration. It does not describe a financial institution, customer deployment, or measured lending outcome.
 
 ## Approach
 - standardized preprocessing with explicit numeric/categorical handling,
 - model comparison across logistic regression, random forest, and gradient boosting,
 - selection based on validation F1,
-- API wrapping for integration into downstream workflows.
+- a local API returning a class prediction and an uncalibrated model score.
 
-## Outcome
-- best model: logistic regression,
-- strong F1 with reliable baseline behavior,
-- deploy-ready prediction endpoint.
+The three models are compared on one stratified validation split, and model selection uses that same split's F1. `data/test.csv` is unlabeled and is not scored. The dataset source and license are not documented here.
 
 ## Next Improvements
 - probability calibration,
 - fairness checks by protected groups,
-- drift monitoring for production data.
+- external validation on an independently labeled dataset,
+- drift monitoring before any operational use.

@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -10,11 +11,28 @@ def main() -> None:
 
     df = pd.read_csv(p)
     top = df.iloc[0]
+    metadata_path = Path("reports/metrics.json")
+    metadata = (
+        json.loads(metadata_path.read_text(encoding="utf-8"))
+        if metadata_path.exists()
+        else {}
+    )
 
     lines = [
         "# Model Card — Loan Approval Prediction",
         "",
         f"Best model: **{top['model']}**",
+        "",
+        f"Application version: **{metadata.get('app_version', 'unknown')}**",
+        "",
+        metadata.get("evaluation_method", "Evaluation method not recorded."),
+        "",
+        (
+            "The API score is uncalibrated. This is not validated for production or "
+            "real credit decisions. The repository does not identify the dataset "
+            "source or license; `data/test.csv` has no target label and is not used "
+            "label and is not used for testing."
+        ),
         "",
         "## Validation Metrics",
         "",

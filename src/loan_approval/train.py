@@ -12,7 +12,6 @@ from sklearn.pipeline import Pipeline
 from loan_approval.data import load_train_data, split_xy
 from loan_approval.preprocess import make_preprocessor
 
-
 APP_VERSION = "0.5.0"
 
 
@@ -75,7 +74,11 @@ def train_and_evaluate(
     metrics_json = {
         "schema_version": "1.0",
         "project": "finance-loan-approval-prediction",
-        "model_version": APP_VERSION,
+        "app_version": APP_VERSION,
+        "evaluation_method": (
+            "single stratified validation split; model selection and reporting use the "
+            "same split"
+        ),
         "best_model": best_name,
         "best_f1": round(best_score, 4),
         "metrics": metrics_df.to_dict(orient="records"),
@@ -97,9 +100,9 @@ def train_and_evaluate(
 def predict(payload: dict, model_path: str = "models/best_model.joblib") -> dict:
     model = joblib.load(model_path)
     x = pd.DataFrame([payload])
-    proba = float(model.predict_proba(x)[0][1])
-    pred = int(proba >= 0.5)
+    score = float(model.predict_proba(x)[0][1])
+    pred = int(score >= 0.5)
     return {
-        "loan_approved": bool(pred),
-        "approval_probability": round(proba, 4),
+        "approval_class_prediction": bool(pred),
+        "approval_score": round(score, 4),
     }

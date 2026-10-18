@@ -5,10 +5,10 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-API-009688)
 ![ML](https://img.shields.io/badge/ML-Classification-orange)
 
-Production-style machine learning system for loan approval prediction with reproducible training and API inference.
+Experimental tabular classification baseline for a loan-approval dataset. It is a portfolio exercise and must not be used to make or recommend real credit decisions.
 
 ## Problem
-Loan approval support is often inconsistent when rules and model outputs are not standardized.
+The repository demonstrates preprocessing, a single stratified train/validation split, model comparison, and a local prediction API.
 
 ## Architecture
 - Data + preprocessing pipeline under `src/loan_approval`
@@ -38,7 +38,7 @@ Response envelope:
 {
   "status": "ok",
   "data": {},
-  "meta": {"model_version": "0.5.0", "latency_ms": 0},
+  "meta": {"app_version": "0.5.0", "latency_ms": null},
   "error": null
 }
 ```
@@ -54,12 +54,15 @@ Evaluation artifacts:
 - `reports/model_card.md`
 
 ## Results
-Current best model and key metrics are generated and stored automatically during training.
+The code compares three classifiers on the same stratified validation split, selects the best by F1, and reports the metrics from that same split. `data/test.csv` has no `Loan_Status` label and is not used as a test result. The API's `approval_score` is the model's raw `predict_proba` output; it is not calibrated. `latency_ms` is `null` because API request duration is not measured.
+
+`app_version` identifies the running API application; the installable package version is defined separately in `pyproject.toml`. No trained model version is claimed.
 
 ## Limitations
-- Model explainability endpoints are not included yet.
-- Data drift monitoring is not implemented.
-- Current model set is tabular baseline-focused.
+- No calibration, fairness analysis, or external validation is implemented.
+- Dataset source and license are not identified in this repository; verify them before redistribution or use.
+- No explainability endpoint or drift monitoring is implemented.
+- This experiment is not validated for production use or real credit decisions.
 
 ## Roadmap
 - Add SHAP-based explainability summary endpoint.
