@@ -3,8 +3,9 @@ from typing import Any
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from loan_approval.train import predict
 from pydantic import BaseModel
+
+from loan_approval.train import predict
 
 APP_VERSION = "0.5.0"
 app = FastAPI(title="Loan Approval Prediction API", version=APP_VERSION)

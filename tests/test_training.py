@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import pytest
+
 from loan_approval.data import load_train_data, split_xy
 from loan_approval.train import predict, train_and_evaluate
 
